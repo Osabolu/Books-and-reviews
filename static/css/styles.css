@@ -1,0 +1,10 @@
+*{
+    margin: 0;
+    padding: o;
+    box-sizing: border-box;
+    overflow: hidden;
+}
+
+.content{
+    background-image: url(../image/imagespp.jpg);
+}
