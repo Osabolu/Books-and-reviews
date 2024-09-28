@@ -1,5 +1,7 @@
 from django.db import models
 from book.models import Book
+from django.utils import timezone
+
 
 
 
@@ -11,6 +13,8 @@ class Review(models.Model):
     rating = models.IntegerField(1-5)
     comment = models.TextField()
     created_at = models.DateTimeField(auto_now_add=True)
+    picture = models.ImageField(upload_to="review_images/", blank=True, null=True)
+
 
     def __str__(self):
         return f"{self.reviewer_name} - {self.book}"

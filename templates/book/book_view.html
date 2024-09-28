@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Django Form</title>
+</head>
+<body>
+    <h1>Django Form</h1>
+    <form action="{% url 'book:django_form' %}" method="POST" enctype="multipart/form-data">
+    {% csrf_token %}
+    {{ add_django_form.as_p }}
+    <button type="submit">Add Book</button>
+    </form>
+</body>
+</html>

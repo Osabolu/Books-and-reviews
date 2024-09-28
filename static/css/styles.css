@@ -5,6 +5,76 @@
     overflow: hidden;
 }
 
+/* .bkg img{
+    position: relative;
+    width: 150px;
+    height: 150px;
+    border-radius: 150px;
+    top: 25px;
+    left: 20px;
+    padding: 15px 3px 15px 3px ;
+} */
+
+header h1{
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    font-size: 100px;
+    font-weight: bold;
+    color: chocolate;
+    margin-left: 300px;
+    margin-top: 270px;
+}
+
+.container{
+    background-image: url(../image/Library-Lovers-Month-ideas.webp);
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    width: 100%;
+    height: 100vh;
+}
+
+
 .content{
-    background-image: url(../image/imagespp.jpg);
+    position: relative;
+    background-image: url(../image/gettyimages-1372784281-612x612.jpg);
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    width: 100%;
+    height: 100vh;
+}
+
+.body{
+    background-image: url(../image/Library-Lovers-Month2.png);
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    width: 100%;
+    height: 100vh;
+}
+
+.navbar ul{
+    position: relative;
+    display: flex;
+    justify-content: space-evenly; 
+    margin-top: 30px; 
+    padding: 40px 20px;
+}
+
+.navbar ul li{
+    width: auto;
+    height: auto;
+    border: transparent;
+    list-style: none;  
+}
+
+.navbar ul li a{
+    display: inline-block;
+    margin-left: 30px;
+    text-decoration: none;
+    font-weight: bolder;
+    color: rgb(63, 60, 58);
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    font-size: 30px;
+    
 }
