@@ -1,0 +1,38 @@
+{% extends "partials/base.html" %}
+{% load static %}
+   
+{% block title %}Review{% endblock title %}
+{% block body %}
+
+<div class= "body">
+    <form action="{% url 'book:django_form' book.id %}" method="POST" enctype="multipart/form-data">
+        <input type="hidden" value="{{ book.id }}" name="book">
+        <h1>Add review for <br> "{{ book.title }}"<br/></h1>
+        {% csrf_token %}
+        <div>
+            {{ form.reviewer_name.label_tag }}
+            {{ form.reviewer_name }}
+        </div>
+
+        <div>
+            {{ form.rating.label_tag }}
+            {{ form.rating }}
+        </div>
+
+        <div>            
+            {{ form.comment.label_tag }}
+            {{ form.comment }}
+        </div>
+
+        <div>            
+            {{ form.cover_page.label_tag }}
+            {{ form.cover_page }}
+        </div>
+        
+
+        <button type="submit">Add review</button>
+        <button type="click" class="home"><a href="{% url 'book:book_detail' book.id %}">Review</a></button>
+    </form>
+</div>
+
+{% endblock body %}

@@ -8,18 +8,44 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{% block title %}Base{% endblock %}</title>
     <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+
+    <style>
+    .success {
+        color: green;
+    }
+    </style>
 </head>
 <body>
-    {% include "./header.html" %}
-  
+    <header>
+        {% if request.user.is_authenticated %}
+            <form action="{% url 'authentication:logout' %}" method="POST">
+                {% csrf_token %}
+                <button type="submit">Log Out</button>
+            </form>
+        {% else %}
+            <a href="{% url 'authentication:login' %}">Log In</a>
+        {% endif %}
+    </header>
+</head>
+<body>
+        {% if messages %}
+    <ul>
+        {% for message in messages %}
+        <li {% if message.tags %}class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+        {% endfor %}
+    </ul>
+    {% endif %}
+ 
+    {% comment %} {% include "./header.html" %} {% endcomment %}
     {% block body %}
-
-    {% include "./footer.html" %}
     
     {% endblock body %}
+    {% comment %} {% include "./footer.html" %} {% endcomment %}
+    
    
     
     {% block scripts %}
     {% endblock scripts %}
 </body>
 </html>
+</body>

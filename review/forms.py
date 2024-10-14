@@ -1,27 +1,24 @@
-# from django import forms
-# from .models import Book
-# from review.models import Review
+from django import forms
+from .models import Book
+from review.models import Review
+from django.core.exceptions import ValidationError
+
+def validate_positive(value):
+    if value < 0 :
+        raise ValidationError(f"{value} is not a positive number")
+    elif value > 5:
+        raise ValidationError(f"{value} 5 is the max number")
 
 
-# class ReviewForm(forms.ModelForm):
-#     class Meta:
-#         model = Review
-#         fields = ['reviewer_name', 'book', 'ratings','created_in','cover_page']
+class ReviewForm(forms.ModelForm):
+    class Meta:
+        model = Review
+        fields = ['book', 'reviewer_name', 'rating','comment','picture']
 
 
-# class BookManualForm(forms.Form):
-#     reviewer_name = forms.CharField(max_length=255)
-#     book = forms.ModelChoiceField(queryset=Book.objects.all())
-#     rating = forms.IntegerField(1-5)
-#     created_in = forms.DateTimeField()
-#     cover_page = forms.ImageField(required=False)
-    # picture = forms.ImageField(upload_to="review_images/", blank=True, null=True)
-
-
-# class BookManualForm(forms.Form):
-#     reviewer_name = models.CharField(max_length=100)
-#     book = models.ForeignKey(Book, on_delete=models.CASCADE)
-#     rating = models.IntegerField(1-5)
-#     comment = models.TextField()
-#     created_at = models.DateTimeField(auto_now_add=True)
-#     picture = models.ImageField(upload_to="review_images/", blank=True, null=True)
+class BookManualForm(forms.Form):
+    title = forms.CharField(max_length=255)
+    author_name =  forms.CharField(max_length=500)   
+    publication_date = forms.IntegerField(validators=[validate_positive])
+    picture = forms.ImageField(required=False)
+ 

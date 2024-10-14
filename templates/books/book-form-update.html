@@ -1,0 +1,39 @@
+{% extends "partials/Base.html" %}
+{% block body  %}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Update using forms.form</title>
+</head>
+<body>
+    <div class= "cover">
+        <form action="{% url 'book:book_form_update' book.id %}" method="POST" enctype="multipart/form-data">
+            <input type="hidden" value="{{ book.id }}" name="book">
+            <h1>update book here <br> "{{ book.title }}"<br/></h1>
+            {% csrf_token %}
+            {% comment %} {{ form.as_p }} {% endcomment %}
+        <div>
+                {{ form.title.label_tag }}
+                {{ form.title }}
+            </div>
+
+            <div>
+                {{ form.publication_date.label_tag }}
+                {{ form.publication_date }}
+            </div>
+
+            <div>            
+                {{ form.picture.label_tag }}
+                {{ form.picture }}
+            </div>
+        <button type="submit" class="update">Update Book</button>
+        <button type="click" class="home"><a href="{% url 'book:home' %}">home</a></button>
+
+        {% comment %} <button><a href="{% url 'book:home' %}">Home Page</a></button> {% endcomment %}
+    </form>
+</body>
+</html>
+    
+    
+   
+{% endblock body %}

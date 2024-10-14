@@ -1,0 +1,48 @@
+{% extends "partials/base.html" %}
+{% load static %}
+   
+{% block title %}Edit{% endblock title %}
+{% block body %}
+    <h2>{% if id %}
+        Edit
+    {% endif %}</h2>
+    <div class= "body">
+        <form action="{% url 'movies:edit_movie' movie.id %}" method="POST" enctype="multipart/form-data">
+            <input type="hidden" value="{{ movies.id }}" name="movies">
+            <h1>Edit movies here <br> "{{ movies.Title }}"<br/></h1>
+            {% csrf_token %}
+            {% comment %} {{ form.as_p }} {% endcomment %}
+            <div>
+                {{ form.Title.label_tag }}
+                {{ form.Title }}
+            </div>
+
+              <div>
+                {{ form.Director.label_tag }}
+                {{ form.Director }}
+            </div>
+
+             <div>
+                {{ form.Genre.label_tag }}
+                {{ form.Genre }}
+            </div>
+
+            <div>
+                {{ form.Release_date.label_tag }}
+                {{ form.Release_date }}
+            </div>
+
+             <div>
+                {{ form.Description.label_tag }}
+                {{ form.Description }}
+            </div>
+
+            {% comment %} <div>            
+                {{ form.Poster.label_tag }}
+                {{ form.Poster }}
+            </div> {% endcomment %}
+        <button type="submit" class="update">Edit Movie</button>
+        <button type="click" class="home"><a href="{% url 'movies:movie_list' %}">Movies</a></button>
+    </form>
+
+{% endblock body %}

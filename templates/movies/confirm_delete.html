@@ -1,0 +1,35 @@
+{% extends "partials/base.html" %}
+{% load static %}
+   
+{% block title %}Confirm Delete{% endblock title %}
+{% block body %}
+
+
+<div class="seek">
+    <div class="sort">
+        <form action="{% url 'movies:delete_movie' movie.id %}" method="POST">
+            {% csrf_token %}
+            <label>
+                <h1>Are you sure you want to delete "{{ movie.Title }}"?</h1>
+                <input type="radio" name="btn">
+                <span class="check"></span>
+                <button type="submit"><b>Yes</b></button>
+            </label>
+            <label>
+                <input type="radio" name="btn">
+                <span class="cross"></span>
+                <a href="{% url 'movies:movie_list' %}"><b>No</b></a>
+            </label>
+        </form> 
+    </div>
+</div>
+
+        
+            {% comment %} <button type="submit"><a href="{% url 'book:book_detail' book.id %}"></a>YES</button> {% endcomment %}
+            {% comment %} <button type="submit"><a href="{% url 'book:books' %}"></a>YES</button> {% endcomment %}
+        
+            {% comment %} <a href="{% url 'movies:movie_list' %}">Cancel</a> {% endcomment %}
+
+
+{% endblock body %}
+   

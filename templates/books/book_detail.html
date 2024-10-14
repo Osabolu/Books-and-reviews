@@ -1,0 +1,36 @@
+{% extends "partials/base.html" %}
+{% load static %}
+
+
+   
+{% block title %}Review{% endblock title %}
+{% block body %}
+
+<div class= "holder">
+    <h1>Here are some reviews about our books</h1>
+    <hr>
+
+    <h2>{{ book.title }}</h2>
+    <h3>By {{ book.author_name }}</h3>
+    <h4>published on: {{ book.publication_date}}</h4>
+    <h4>cover page: {{ book.cover_page }}</h4>
+ 
+    {% if reviews %}
+    {% for review in reviews %}
+    <div>
+        <h3>{{ review.reviewer_name }}</h3>
+        <p>{{ review.comment }}</p>
+    </div>
+    
+    {% endfor %}
+    {% else %}
+    <p>No reviews yet</p>
+    {% endif %}
+    <button class="edit"><a href="{% url 'book:book_form_update' book.id %}">Edit Book</a></button>
+    <button class="delete"><a href="{% url 'book:confirm_delete' book.id %}">Delete Book</a></button>
+    <button class="click"><a href="{% url 'book:books' %}">Books</a></button>
+    <button class="link"><a href="{% url 'book:django_form' book.id %}">click to add reviews</a></button>
+    </div>
+   
+{% comment %} <button class="home"><a href="/home">Home</a></button> {% endcomment %}
+{% endblock body %}

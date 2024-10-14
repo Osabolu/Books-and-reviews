@@ -1,12 +1,18 @@
 from django.db import models
 from django.utils import timezone
 from django.core.exceptions import ValidationError
+from datetime import datetime
 
 # from author.models import Author
 # from review.models import Review
 
 
 # Create your models here.
+def validate_positive(value):
+    if value < 0 :
+        raise ValidationError(f"{value} is not a positive number")
+    elif value > 5:
+        raise ValidationError(f"{value} 5 is the max number")
 
 def validate_year(value):
     current_year = timezone.now().year
@@ -17,7 +23,8 @@ def validate_year(value):
 class Book(models.Model):
     title = models.CharField(max_length=150)
     author_name = models.CharField(max_length=200, blank=True, null=True)
-    publication_date = models.DateField(validators=[validate_year])
+    # publication_date = models.DateField(validators=[validate_year])
+    publication_date = models.DateField()
     cover_page = models.ImageField(upload_to="book_cover_page/", blank=True, null=True)
 
     def __str__(self):

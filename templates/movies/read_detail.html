@@ -1,0 +1,37 @@
+{% extends "partials/base.html" %}
+{% load static %}
+
+
+   
+{% block title %}Read{% endblock title %}
+{% block body %}
+
+<div class= "holder">
+    <h1>Have a preview of movies listed</h1>
+    <hr>
+
+    <h2>{{ movie.Title }}</h2>
+    <h3>By {{ movie.Director}}</h3>
+    <h4>Release date: {{ movie.Release_date}}</h4>
+    <h4>Genre: {{ movie.Genre}}</h4>
+    <h4>Description: {{ movie.Description}}</h4>
+    {% comment %} <h4>Poster: {{ movies.Poster }}</h4> {% endcomment %}
+
+    
+    {% if Description %}
+    {% for Description in Descriptions %}
+    <div>
+        <h3>{{ Description.Title }}</h3>
+        <p>{{ Description.Poster }}</p>
+    </div>
+    
+    {% endfor %}
+    {% endif %}
+
+    <button class="edit"><a href="{% url 'movies:edit_movie' movie.id %}">Edit Movie</a></button>
+    <button class="delete"><a href="{% url 'movies:confirm_delete' movie.id %}">Delete Movie</a></button>
+    {% comment %} <button class="click"><a href="{% url 'book:books' %}">Books</a></button> {% endcomment %}
+    {% comment %} <button class="link"><a href="{% url 'book:django_form' book.id %}">click to add reviews</a></button> {% endcomment %}
+    </div>
+
+{% endblock body %}

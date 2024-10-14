@@ -1,0 +1,15 @@
+{% comment %} {% extends "partials/base.html" %} {% endcomment %}
+{% load static %}
+
+{% block title %}Log In{% endblock title %}
+
+{% block body %}
+<div class="formcov">
+    <form action="{% url 'authentication:login' %}" method="POST">
+        {% csrf_token %}
+        {{ form.as_div }}
+        <button type="submit">Log In</button>
+        <p>Don't have an account? <a href="{% url 'authentication:sign_up' %}">Sign Up</a></p>
+    </form>
+</div>
+{% endblock body %}

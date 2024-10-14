@@ -43,6 +43,8 @@ INSTALLED_APPS = [
 
     "book",
     "review",
+    "movies",
+    "authentication",
 ]
 
 MIDDLEWARE = [
@@ -128,6 +130,10 @@ STATICFILES_DIRS = [BASE_DIR / "static"]
 
 MEDIA_ROOT = os.path.join(BASE_DIR / 'media')
 MEDIA_URL = '/media/'
+
+LOGIN_URL = "authentication:login"
+LOGIN_REDIRECT_URL = "movies:movie_list"
+LOGOUT_REDIRECT_URL = "authentication:login"
 
 
 

@@ -1,6 +1,8 @@
-from django.http import HttpResponse
+from django.http import HttpResponseRedirect
 from django.shortcuts import render, redirect, get_object_or_404
-from .form import ReviewForm, ReviewManualForm
+from django.urls import reverse
+from .form import ReviewForm
+from review.forms import BookManualForm
 from .models import Book
 from review.models import Review
 
@@ -8,13 +10,13 @@ from review.models import Review
 
 # Create your views here.
 
-readers_review = {
+readers_review = { 
         "Caleb": "If you love family, loyality, and despise betrayal, The Godfather is your book",
         "Jack": "Dean brown is the man of the year...",
-        "Kerry": "Sydney Shelson will make you emotional and keep you at the edge of you seat",
+        "Kerry": "Sydney Sheldon will leave you emotional and keep you at the edge of you seat",
         "Travis": "Mario Puzzo is the real Last Don",
-        "shella": "Ben Carlson is an inspiration to black communities around the world", 
-    }
+        "sheila": "Ben Carlson is an inspiration to black communities", 
+}
 
 
 context = {
@@ -22,86 +24,113 @@ context = {
         }
 
 def home(request):
-    return render(request, "book/home.html")
+    return render(request, "books/home.html")
 
-def book(request):
+def books(request):  
     books = Book.objects.all()
-    return render(request, "book/book.html", {"books": books})
+    return render(request, "books/book_list.html", {"books": books})
 
-def book_view(request, book_id):
+
+def book_detail(request, book_id):
     book = get_object_or_404(Book, pk=book_id)
-    return render(request,"book/book_view.html", {"book":book})
-
-
-def review(request):
-    return render(request, "book/review.html", context)
-
-def django_form(request):
-    return render(request, "book/djangio-form.html")
-
-def new_book(request, book_id):
-    all_books = Book.objects.all()
-    all_reviews = Review.objects.all()
+    reviews = Review.objects.filter(book=book)
+    form = ReviewForm()
     context = {
-        "all_books": all_books,
-        "all_reviews": all_reviews,
+        "book":book,
+        "reviews":reviews,
+        "form":form
     }
+    return render(request,"books/book_detail.html", context)
+
+
+def review(request, book_id):
+    book = get_object_or_404(Book, pk=book_id )
+    context = {
+        'reviews': readers_review,
+        "book":book
+        }
+    return render(request, "books/review.html", context)
+
+
+def django_form(request, book_id):
     book = get_object_or_404(Book, pk=book_id)
-   
-    return render(request, "book/new-book.html", context, {"books":book})
-
-def new_review(request):
-
-    all_books = Book.objects.all()
-    all_reviews = Review.objects.all()
-
-    context = {
-        "all_books": all_books,
-        "all_reviews": all_reviews,
-    }
-    return render(request, "book/new_review.html", context)
-
-
-def django_form(request):
-    form = ReviewManualForm()
+    review = Review.objects.filter(book=book)
+    form = ReviewForm()
     if request.method == "POST":
-        form = ReviewManualForm(request.POST, request.FILES)
+        print(request.POST)
+        form = ReviewForm(request.POST, request.FILES)
+        if form.is_valid():
+            form.save()
+            return redirect(reverse("book:book_detail", args=[book_id]))
+    context = {
+        "book_form": form,
+        "review":review,
+        "form":form,
+        "book": book,
+    }
+    return render(request, "books/django-form.html", context)
+
+def book_form_update(request, book_id):
+    book = get_object_or_404(Book, pk=book_id)
+    initial_data = {
+        "title": book.title,
+        "author_name": book.author_name,
+        "publication_date": book.publication_date,
+        "cover_page": book.cover_page,
+    }
+    form = BookManualForm(initial=initial_data)
+    if request.method == "POST":
+        form = BookManualForm(request.POST, request.FILES)
         if form.is_valid():
             cleaned_data = form.cleaned_data
             title = cleaned_data.get("title")
-            author = cleaned_data.get("author")
-            number_of_pages = cleaned_data.get("number_of_pages")
-            published_on = cleaned_data.get("published_on")
+            author_name = cleaned_data.get("author_name")
+            publication_date = cleaned_data.get("publication_date")
             cover_page = cleaned_data.get("cover_page")
-
-            reviewer_name = cleaned_data.get("reviewer")
-            book = cleaned_data.get("book")
-            rating = cleaned_data.get("rating")
-            created_at = cleaned_data.get("created_at")
-            picture = cleaned_data.get("picture")
-            Review.objects.create(reviewer_name=reviewer_name, book=book, rating=rating, created_at=created_at, picture=picture)
-            return redirect("book:book_view")
-    
+            book.title = title
+            book.author_name = author_name
+            book.publication_date = publication_date
+            if cover_page:
+                book.cover_page = cover_page
+            book.save()
+            return redirect("book:books")
     context = {
-        "manual_book_form": form, 
+        "form": form,
+        "book": book,
     }
-    return render(request, "book/django-form.html", context)
+    return render(request, "books/book-form-update.html", context)
 
 
 
 
-
-# def django_form(request):
-#     form = ReviewForm()
-#     if request.method == "POST":
-#         print(request.POST)
-#         form = ReviewForm(request.POST, request.FILES)
-#         if form.is_valid():
-#             form.save()
-#             return redirect("book:new_review")
+def delete_book(request, book_id):
+    book = get_object_or_404(Book, pk=book_id)
+    if request.method == "POST":
+        book.delete()                           
+    return redirect("book:books")
         
-#     context = {
-#         "add_book_form": form,
-#     }
-#     return render(request, "book/django-form.html", context)
+    
+        
+        
+
+def confirm_delete(request, book_id):
+    book = get_object_or_404(Book, pk=book_id)
+    return redirect("book:books")
+    # return render(request,"books/confirm-delete.html", {"book":book})
+    return redirect(reverse("book:books", args=[book_id]))
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 

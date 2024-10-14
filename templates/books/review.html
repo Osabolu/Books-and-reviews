@@ -1,0 +1,54 @@
+<html>
+<head>
+    <title>Book Detail</title>
+</head>
+<body>
+{% comment %} <div class= "holder"> {% endcomment %}
+    {% comment %} <h1>{{ book.title }}</h1>
+    <h3>By {{ book.author_name }}</h3>
+    <h4>published on: {{ book.publication_date}}</h4>
+    <h4>cover page: {{ book.cover_page }}</h4>
+ 
+    {% if reviews %}
+    {% for review in reviews %}
+    <div>
+        <h3>{{ review.reviewer_name }}</h3>
+        <p>{{ review.comment }}</p>
+    </div>
+    
+    {% endfor %}
+    {% else %}
+    <p>No reviews yet</p>
+    {% endif %}
+
+    <div>
+        <div class= "body">
+            <a href="{% url 'book:django_form' book.id %}">Add a review</a>
+        </div>
+    </div>  {% endcomment %}
+
+
+<div class= "holder">
+    <h1>Here are some reviews about our books</h1>
+    <hr>
+    <ul>
+        {% for review, reviews in reviews.items %}
+            <h3>{{review}}</h3>
+            <p><li>{{reviews}}</li></p>  
+        {% endfor %}
+    </ul>
+
+    <button class="click"><a href="{% url 'book:books' book.id %}">Books</a></button>
+    <button class="link"><a href="{% url 'book:django_form' book.id %}">for more reviews</a></button>
+</div>
+</body>
+</html>    
+     
+
+
+
+    <button class="home"><a href="/home">Home</a></button>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<head>
+    <title>Document</title>
+</head>
+<body>
+    {% comment %} <h1>Are you sure you want to delete"{{ book.title }}"?</h1> {% endcomment %}
+    {% comment %} <form action="{% url 'book:books' book.id %}" method="POST"> {% endcomment %}
+        {% csrf_token %}
+        {% comment %} <button type="submit"><a href="{% url 'book:book_detail' book.id %}"></a>YES</button> {% endcomment %}
+        <button type="submit"><a href="{% url 'book:books' %}"></a>Delete</button>
+        {% comment %} <button type="click"><a href="{% url 'book:book_detail' book.id %}"></a>Cancel</button> {% endcomment %}
+    </form>
+</body>
+</html>

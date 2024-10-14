@@ -1,0 +1,43 @@
+{% extends "partials/base.html" %}
+{% load static %}
+   
+{% block title %}create{% endblock title %}
+{% block body %}
+<body>
+    <div class= "formcover">
+        <form action="{% url 'movies:create' %}" method="POST" enctype="multipart/form-data">
+            <input type="hidden" value="{{ movie.id }}" name="movies">
+            <h1>Create movie here</h1>
+                {% csrf_token %}
+            <br> "{{ movie.Title }}"<br/>
+            {% comment %} {{ form.as_p }} {% endcomment %} 
+             <div>
+                {{ form.Title.label_tag }}
+                {{ form.Title }}
+            </div>
+
+             <div>
+                {{ form.Director.label_tag }}
+                {{ form.Director }}
+            </div>
+
+             <div>
+                {{ form.Genre.label_tag }}
+                {{ form.Genre }}
+            </div>
+
+            <div>
+                {{ form.Release_date.label_tag }}
+                {{ form.Release_date }}
+            </div>
+
+            <div>            
+                {{ form.Poster.label_tag }}
+                {{ form.Poster }}
+            </div>
+        <button type="submit" class="update"><a href="{% url 'movies:movie_list' %}"></a>Create Movie</button>
+        <button type="click" class="homepage"><a href="{% url 'movies:movie_list' %}">Movies</a></button> 
+        
+    </form>
+
+{% endblock body %}

@@ -1,14 +1,14 @@
 {% load static %}
 
-{% comment %} <header>
-  <div class="container">
-    <div class="navbar">
-      <ul>
+<header>
+  {% comment %} <div class="container"> {% endcomment %}
+    {% comment %} <div class="navbar"> {% endcomment %}
+      {% comment %} <ul>
         <li><a href="{% url 'book:home' %}">Home Page</a></li>
         <li><a href="{% url 'book:book' %}">Books</a></li>
         <li><a href="{% url 'book:review' %}">Add comment</a></li>
-      </ul>
-      <h1>Welcome to Book Lovers</h1>
+      </ul> {% endcomment %}
+      {% comment %} <h1>Welcome to Book Lovers</h1> {% endcomment %}
     </div>
   </div>
-</header> {% endcomment %}
+</header>
